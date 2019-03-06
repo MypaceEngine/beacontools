@@ -25,6 +25,8 @@ try:
             if(time.perf_counter()-bt_list[i]>30):
                 print("<OUT> %s " % (i))
                 del bt_list[i]
-        time.sleep(0.1)
+            else:
+                print("<Listing> %s %d" % (i,time.perf_counter()-bt_list[i]))
+        time.sleep(1)
 except KeyboardInterrupt:
     scanner.stop()
