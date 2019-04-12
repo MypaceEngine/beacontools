@@ -9,6 +9,7 @@ def callback(bt_addr, rssi, packet, additional_info):
         id="Type:Eddystone Adress:"+bt_addr+" Namespace:"+additional_info["namespace"]+" Instance:"+additional_info["instance"]
     elif("uuid" in additional_info):
         id="Type:iBeacon Adress:"+bt_addr+" UUID:"+additional_info["uuid"]+" Major:"+str(additional_info["major"])+" Minor:"+str(additional_info["minor"])
+    print("<Receive> %s " % (id))
     if not (id in bt_list):
         print("<IN> %s " % (id))
     currentCPUTime=time.perf_counter()
@@ -20,6 +21,8 @@ scanner.start()
 
 try:
     while True:
+        if(len(bt_list)==0):
+            print("<No Listing>")
         for i in list(bt_list):
             
             #Wait 30s for detecting to exit beacon.
