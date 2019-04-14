@@ -15,12 +15,19 @@ def callback(bt_addr, rssi, packet, additional_info):
     currentCPUTime=time.perf_counter()
     bt_list[id]=currentCPUTime
     
-# scan for all TLM frames of beacons
-scanner = BeaconScanner(callback)
-scanner.start()
+scanner=None
+scannerStartTime=0;
 
 try:
     while True:
+        if(scanner==None)or(time.perf_counter()-scannerStartTime>3600):
+            print("<Beacon Scanner Restart>")
+            if not (scanner==None):
+                scanner.stop()
+            # scan for all TLM frames of beacons
+            scanner = BeaconScanner(callback)
+            scanner.start()
+            scannerStartTime=time.perf_counter()
         if(len(bt_list)==0):
             print("<No Listing>")
         for i in list(bt_list):
